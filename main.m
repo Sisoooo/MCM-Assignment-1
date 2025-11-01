@@ -1,7 +1,7 @@
-addpath('include');
-
 %% TO DO: Test assignment 1 MCM 2024-2025
 % 1.1 Angle-axis to rot
+
+    addpath("include");
 
     h1 = [1;0;0];
     theta1 = pi/2;
@@ -31,17 +31,31 @@ addpath('include');
     R3 = AngleAxisToRot(h3, theta3);
 
 %% 1.2 Rot to angle-axis
+    
+    addpath("include");
 
     mat1 = [1,0,0;0,0,-1;0,1,0];
     mat2 = [0.5,-sqrt(3)/2,0;sqrt(3)/2,0.5,0;0,0,1];
     mat3 = [1,0,0;0,1,0;0,0,1];
     mat4 = [-1,0,0;0,-1,0;0,0,1];
     mat5 = [-1,0,0;0,1,0;0,0,1];
-    
+
+    [h1_r, theta1_r] = RotToAngleAxis(mat1);
+    [h2_r, theta2_r] = RotToAngleAxis(mat2);
+    [h3_r, theta3_r] = RotToAngleAxis(mat3);
+    [h4_r, theta4_r] = RotToAngleAxis(mat4);
+    [h5_r, theta5_r] = RotToAngleAxis(mat5);
+        
     
 
 %% 1.3 Euler to rot
 
+    addpath("include");
+
 %% 1.4 Rot to Euler
 
+    addpath("include");
+
 %% 1.5 Rot to angle-axis with eigenvectors
+
+    addpath("include");
