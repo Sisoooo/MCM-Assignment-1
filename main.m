@@ -52,9 +52,40 @@
 
     addpath("include");
 
+    psi1 = 0;
+    theta1 = 0;
+    phi1 = pi/2;
+
+    psi2 = pi/3;
+    theta2 = 0;
+    phi2 = 0;
+
+    psi3 = pi/3;
+    theta3 = pi/2;
+    phi3 = pi/4;
+
+    psi4 = 0;
+    theta4 = pi/2;
+    phi4 = pi/12;
+
+    % Convert Euler angles to rotation matrices
+    R1_euler = YPRToRot(psi1, theta1, phi1);
+    R2_euler = YPRToRot(psi2, theta2, phi2);
+    R3_euler = YPRToRot(psi3, theta3, phi3);
+    R4_euler = YPRToRot(psi4, theta4, phi4);
+
 %% 1.4 Rot to Euler
 
     addpath("include");
+
+    R1_toEuler = [1, 0, 0; 0, 0, -1; 0, 1, 0];
+    R2_toEuler = [1/2, -sqrt(3)/2, 0; sqrt(3)/2, 1/2, 0; 0, 0, 1];
+    R3_toEuler = [0, -sqrt(2)/2, sqrt(2)/2; 0.5, (sqrt(2)*sqrt(3))/4, (sqrt(2)*sqrt(3))/4;
+        -sqrt(3)/2, sqrt(2)/4, sqrt(2)/4];
+
+    [psi1_fromR, theta1_fromR, phi1_fromR] = RotToYPR(R1_toEuler);
+    [psi2_fromR, theta2_fromR, phi2_fromR] = RotToYPR(R2_toEuler);
+    [psi3_fromR, theta3_fromR, phi3_fromR] = RotToYPR(R3_toEuler);
 
 %% 1.5 Rot to angle-axis with eigenvectors
 

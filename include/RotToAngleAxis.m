@@ -33,7 +33,7 @@ function [h,theta] = RotToAngleAxis(R)
 
         for j=1:3
             if j ~= ch_index
-               h(j) = sgn(h(ch_index))*sgn(R(ch_index,j))*sqrt((R(i,i)+1)/2);
+               h(j) = sgn(h(ch_index))*sgn(R(ch_index,j))*sqrt((R(j,j)+1)/2);
             end
         end
     else
