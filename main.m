@@ -90,3 +90,41 @@
 %% 1.5 Rot to angle-axis with eigenvectors
 
     addpath("include");
+
+    R1_eigen = [1,0,0;0,0,-1;0,1,0];
+    R2_eigen = 1/9*[4,-4,-7;8,1,4;-1,-8,4];
+
+    % Method 1
+
+    [h1_m1, theta1] = RotToAngleAxis(R1_eigen);
+    [h2_m1, theta2] = RotToAngleAxis(R2_eigen);
+
+    % Method 2
+
+    % D1 e D2 autovalori in diagionale, V1 e V2 hanno colonne con gli
+    % autovettori corrispondenti alle posizioni di D
+
+    [V1, D1] = eig(R1_eigen);
+    [V2, D2] = eig(R2_eigen);
+
+    function eigenV = findUnitEigenvector(V,D)
+
+        for i=1:3
+            if(D(i,i) - 1 < 1e-3)
+                eigenV = V(:,i);
+                break;
+            else
+                eigenV = NaN;
+            end
+        end
+    
+    end
+
+    h1_m2 = findUnitEigenvector(V1,D1);
+    h2_m2 = findUnitEigenvector(V2,D2);
+
+
+
+
+
+    
