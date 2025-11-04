@@ -110,7 +110,7 @@
     function eigenV = findUnitEigenvector(V,D)
 
         for i=1:3
-            if(D(i,i) - 1 < 1e-3)
+            if(int32(real(D(i,i))) == 1)
                 eigenV = V(:,i);
                 break;
             else
