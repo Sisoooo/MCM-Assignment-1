@@ -7,16 +7,17 @@ function [isRotationMatrix] = IsRotationMatrix(R)
     isRotationMatrix = false;
     count = 0;
     
+    R_p = R * R';
+
     for i=1:3
-        if(R(i,i) - 1 >= 1e-3)
-            warning("R is not a rotation matrix");
+        if(R_p(i,i) - 1 >= 1e-3)
             break;
         else 
             count = count + 1;
         end
     end
      
-    if(abs(det(R) - 1) < 1e-3 && count == 3)
+    if(abs(det(R)) - 1 < 1e-3 && count == 3)
         isRotationMatrix = true;
     end
 
