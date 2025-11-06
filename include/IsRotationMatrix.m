@@ -17,7 +17,7 @@ function [isRotationMatrix] = IsRotationMatrix(R)
         end
     end
      
-    if(abs(det(R)) - 1 < 1e-3 && count == 3)
+    if(abs(det(R) - 1) < 1e-3 && count == 3)
         isRotationMatrix = true;
     end
 

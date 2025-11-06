@@ -124,7 +124,18 @@
     h2_m2 = findUnitEigenvector(V2,D2);
 
 
+    % We reintroduce the vex function to find theta2 through the second
+    % method, since the original sign is incorrect
+    
+    function a = vex(S_a)
+    
+    a=[S_a(3,2); S_a(1,3); S_a(2,1)];
+    
+    end
 
+    % We then extrapolate the single value of theta2 from the formula
+
+    theta2 = real(mean(asin(vex((R2_eigen-R2_eigen')/2) ./ h2_m2)));
 
 
     

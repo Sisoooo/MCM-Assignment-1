@@ -51,6 +51,7 @@ function s = sgn(x)
             s = -1;
         else
             s = 0;
+            
     end
 
 end
