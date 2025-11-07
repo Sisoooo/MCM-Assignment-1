@@ -87,6 +87,7 @@
     [psi2_fromR, theta2_fromR, phi2_fromR] = RotToYPR(R2_toEuler);
     [psi3_fromR, theta3_fromR, phi3_fromR] = RotToYPR(R3_toEuler);
     
+    [psi16, theta16, phi16] = RotToYPR([-1,0,0;0,0,1;0,1,0])
 %% 1.5 Rot to angle-axis with eigenvectors
 
     addpath("include");
