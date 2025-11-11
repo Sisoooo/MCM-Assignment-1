@@ -66,7 +66,7 @@
 
     psi4 = 0;
     theta4 = pi/2;
-    phi4 = pi/12;
+    phi4 = -pi/12;
 
     % Convert Euler angles to rotation matrices
     R1_euler = YPRToRot(psi1, theta1, phi1);
