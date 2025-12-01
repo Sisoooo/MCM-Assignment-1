@@ -9,11 +9,11 @@ classdef geometricModel < handle
     % iTj is  vector of matrices containing the transformation matrices from link i to link j for the input q.
     % The size of iTj is equal to (4,4,numberOfLinks)
     properties
-        iTj_0 = BuildTree()
-        jointType = [0;0;0;0;0;1;0];
-        jointNumber = 7;
-        iTj = [];
-        q = [q1;q2;q3;q4;q5;q6;q7]
+        iTj_0 
+        jointType 
+        jointNumber 
+        iTj 
+        q 
     end
 
     methods
@@ -40,6 +40,18 @@ classdef geometricModel < handle
             % The size of iTj is equal to (4,4,numberOfLinks)
             
             %TO DO
+            self.iTj= [];
+            for i=1:self.jointNumber
+
+                if self.jointType=0
+                  
+                        ]
+                
+                if self.jointType=1
+
+            end 
+
+     
         end
         function [bTk] = getTransformWrtBase(self,k)
             %% GetTransformatioWrtBase function
