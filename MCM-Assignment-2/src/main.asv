@@ -12,9 +12,8 @@ jointType = [0 0 0 0 0 1 0]; % specify two possible link type: Rotational, Prism
 geometricModel = geometricModel(iTj_0,jointType);
 
 %% Q1.3
-bTe = geometricModel.getTransformWrtBase(length(jointType));
-disp('bTe')
-disp(bTe)
+
+bTe = geometricModel.getTransformWrtBase()
 
 %% Q1.4 Simulation
 % Given the following configurations compute the Direct Geometry for the manipulator
@@ -22,7 +21,7 @@ disp(bTe)
 % Compute iTj : transformation between the base of the joint <i>
 % and its end-effector taking into account the actual rotation/traslation of the joint
 qi = [pi/4, -pi/4, 0, -pi/4, 0, 0.15, pi/4];
-geometricModel.updateDirectGeometry(qi);
+geometricModel.updateDirectGeometry(qi)
 disp('iTj')
 disp(geometricModel.iTj);
 
@@ -81,7 +80,6 @@ pm.plotFinalConfig(bTi)
 
 %% Q1.5
 km = kinematicModel(geometricModel);
-km.getJacobianOfLinkWrtBase(6);
 
 %% Q1.6
 
