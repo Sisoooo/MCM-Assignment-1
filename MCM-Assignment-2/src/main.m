@@ -16,6 +16,19 @@ bTe = geometricModel.getTransformWrtBase(length(jointType));
 disp('bTe')
 disp(bTe)
 
+T_0 = geometricModel.iTj;
+t62 = eye(4);
+
+% Must reverse: 6 -> 2, not 2 -> 6
+for i=3:6
+    t62 = t62 * T_0(:,:,i);
+end
+
+t26 = [t62(1:3,1:3)', -t62(1:3,1:3)' * t62(1:3,4); 0 0 0 1];
+
+disp('t26')
+disp(t26)
+
 %% Q1.4 Simulation
 % Given the following configurations compute the Direct Geometry for the manipulator
 
@@ -31,7 +44,7 @@ bTe = geometricModel.getTransformWrtBase(length(jointType));
 disp('bTe')
 disp(bTe)
 
-% Show simulation ?
+% Show simulation?
 show_simulation = true;
 
 % Set initial and final joint positions

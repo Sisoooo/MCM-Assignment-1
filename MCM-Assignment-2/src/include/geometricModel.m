@@ -21,7 +21,7 @@ classdef geometricModel < handle
         function self = geometricModel(iTj_0,jointType)
             if nargin > 1
                 self.iTj_0 = iTj_0;
-                self.iTj = [];
+                self.iTj = iTj_0;
                 self.jointType = jointType;
                 self.jointNumber = length(jointType);
                 self.q = zeros(self.jointNumber,1);
@@ -40,17 +40,15 @@ classdef geometricModel < handle
             % The size of iTj is equal to (4,4,numberOfLinks)
             
             %TO DO
-            self.iTj(:, :, 1) = eye(4);
             self.q = q;
-
-            for i=2:self.jointNumber
+            for i=1:self.jointNumber
                 if self.jointType(i) == 0
-                    self.iTj(:,:,i) = self.iTj_0(:,:,i-1) * [cos(self.q(i)), -sin(self.q(i)), 0, 0; 
+                    self.iTj(:,:,i) = self.iTj_0(:,:,i) * [cos(self.q(i)), -sin(self.q(i)), 0, 0; 
                                                            sin(self.q(i)), cos(self.q(i)), 0, 0; 
                                                            0, 0, 1, 0; 
                                                            0, 0, 0, 1];
                 elseif self.jointType(i) == 1
-                    self.iTj(:,:,i) = self.iTj_0(:,:,i-1) * [1, 0, 0, 0; 
+                    self.iTj(:,:,i) = self.iTj_0(:,:,i) * [1, 0, 0, 0; 
                                                            0, 1, 0, 0; 
                                                            0, 0, 1, self.q(i); 
                                                            0, 0, 0, 1];
