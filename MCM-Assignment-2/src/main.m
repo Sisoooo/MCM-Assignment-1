@@ -93,9 +93,20 @@ end
 pm.plotFinalConfig(bTi)
 
 %% Q1.5
+
+qf = [5*pi/12, -pi/3, 0, -pi/4, 0, 0.18, pi/5];
+geometricModel.updateDirectGeometry(qf);
 km = kinematicModel(geometricModel);
-km.getJacobianOfLinkWrtBase(6);
+jac = km.getJacobianOfLinkWrtBase(6);
+
+disp(jac)
+
 
 %% Q1.6
+
+qf = [5*pi/12, -pi/3, 0, -pi/4, 0, 0.18, pi/5];
+geometricModel.updateDirectGeometry(qf);
+km = kinematicModel(geometricModel);
+updateJacobian(km)
 
 %% Q1.7

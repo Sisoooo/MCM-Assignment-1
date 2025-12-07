@@ -30,7 +30,7 @@ classdef kinematicModel < handle
                     k_index = self.gm.getTransformWrtBase(j);
                     bJ_a(:, j) = k_index(1:3,3);
                 elseif self.gm.jointType(j) == 1
-                    bJ_a(:, j) = zeros(3);
+                    bJ_a(:, j) = zeros(3,1);
                 end
             end
 
@@ -54,10 +54,7 @@ classdef kinematicModel < handle
         %% Update Jacobian function
         % The function update:
         % - J: end-effector jacobian matrix
-
-            % TO DO
-
-            
+        % TO DO
         end
     end
 end
