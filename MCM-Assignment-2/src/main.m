@@ -99,6 +99,7 @@ geometricModel.updateDirectGeometry(qf);
 km = kinematicModel(geometricModel);
 jac = km.getJacobianOfLinkWrtBase(6);
 
+disp('Basic robot Jacobian for link 6:')
 disp(jac)
 
 
@@ -109,4 +110,28 @@ geometricModel.updateDirectGeometry(qf);
 km = kinematicModel(geometricModel);
 updateJacobian(km)
 
+disp('End-Effector basic robot Jacobian:')
+disp(km.J)
+
 %% Q1.7
+
+qp = [0.7, -0.1, 1, -1, 0, 0.03, 1.3];
+qv = [0.9, 0.1, -0.2, 0.3, -0.8, 0.5, 0];
+
+geometricModel.updateDirectGeometry(qp);
+km = kinematicModel(geometricModel);
+updateJacobian(km);
+
+r_cross = geometricModel.getTransformWrtBase(geometricModel.jointNumber);
+r_skew = [0, -r_cross(3), r_cross(2); r_cross(3), 0, -r_cross(1); -r_cross(2), r_cross(1), 0];
+rgJac = [eye(3), zeros(3); r_skew', eye(3)];
+
+ni = rgJac * km.J * qv';
+omega_ee = ni(1:3);
+v_ee = ni(4:6);
+
+disp('Angular velocity components:')
+disp(omega_ee);
+
+disp('Linear velocity components:')
+disp(v_ee);

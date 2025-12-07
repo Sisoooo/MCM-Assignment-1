@@ -39,7 +39,6 @@ classdef geometricModel < handle
             % - iTj: vector of matrices containing the transformation matrices from link i to link j for the input q.
             % The size of iTj is equal to (4,4,numberOfLinks)
             
-            %TO DO
             self.q = q;
             for i=1:self.jointNumber
                 if self.jointType(i) == 0
