@@ -123,15 +123,12 @@ km = kinematicModel(geometricModel);
 updateJacobian(km);
 
 ni = km.J * qv';
-o_omega_ee = ni(1:3);
-o_v_ee = ni(4:6);
+omega_ee = ni(1:3);
+v_ee = ni(4:6);
 
 %now we project them in ee-frame
-bTe = geometricModel.getTransformWrtBase(length(jointType));  
-ee_R_b = bTe(1:3,1:3);
 
-omega_ee = ee_R_b*o_omega_ee;
-v_ee = ee_R_b*o_v_ee;
+ee_R_b = geometricModel.iTj(3,3,7);
 
 disp('Angular velocity components:')
 disp(omega_ee);
