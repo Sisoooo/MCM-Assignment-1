@@ -18,25 +18,46 @@ classdef kinematicModel < handle
             end
         end
 
-        function bJi = getJacobianOfJointWrtBase(self, i)
-            %% getJacobianOfJointWrtBase function
+        function bJi = getJacobianOfLinkWrtBase(self, i)
+            %%% getJacobianOfJointWrtBase
             % This method computes the Jacobian matrix bJi of joint i wrt base.
-            % Inputs:
-            % i : joint indnex ;
+            % Inputs: i, joint index;
+            % The function returns bJi
 
-            % The function returns:
-            % bJi
+            % Compute angular Jacobian
+            for j=1:i
+                if self.gm.jointType(j) == 0
+                    k_index = self.gm.getTransformWrtBase(j);
+                    bJ_a(:, j) = k_index(1:3,3);
+                elseif self.gm.jointType(j) == 1
+                    bJ_a(:, j) = zeros(3,1);
+                end
+            end
+
+            % Compute linear Jacobian
+            for j=1:i
+                if self.gm.jointType(j) == 0
+                    nR0 = self.gm.getTransformWrtBase(length(self.gm.jointNumber));
+                    k_index = self.gm.getTransformWrtBase(j);
+                    bJ_l(:, j) = cross(k_index(1:3,3), nR0(1:3,4)-k_index(1:3,4));
+                elseif self.gm.jointType(j) == 1
+                    k_index = self.gm.getTransformWrtBase(j);
+                    bJ_l(:, j) = k_index(1:3,3);
+                end
+            end
+
+            bJi = [bJ_a; bJ_l]; 
             
-            %TO DO
         end
 
+
         function updateJacobian(self)
-        %% updateJacobian function
+        %% Update Jacobian function
         % The function update:
         % - J: end-effector jacobian matrix
-            % TO DO
-
-            
+        % TO DO
+        
+        self.J = self.getJacobianOfLinkWrtBase(self.gm.jointNumber);
         end
     end
 end

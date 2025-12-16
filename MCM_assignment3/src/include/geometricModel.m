@@ -14,32 +14,61 @@ classdef geometricModel < handle
         jointNumber
         iTj
         q
+        eTt
     end
 
     methods
         % Constructor to initialize the geomModel property
-        function self = geometricModel(iTj_0,jointType)
+        function self = geometricModel(iTj_0,jointType, eTt)
             if nargin > 1
                 self.iTj_0 = iTj_0;
                 self.iTj = iTj_0;
+                self.eTt = eTt;
                 self.jointType = jointType;
                 self.jointNumber = length(jointType);
                 self.q = zeros(self.jointNumber,1);
             else
-                error('Not enough input arguments (iTj_0) (jointType)')
+                error('Not enough input arguments (iTj_0) (jointType) (eTt)')
             end
         end
         function updateDirectGeometry(self, q)
-            %% updateDirectGeometry function
+            %%% GetDirectGeometryFunction
             % This method update the matrices iTj.
             % Inputs:
-            % q : joints current position ;
+            % q : joints current position;
 
             % The function updates:
             % - iTj: vector of matrices containing the transformation matrices from link i to link j for the input q.
             % The size of iTj is equal to (4,4,numberOfLinks)
             
-            %TO DO
+            self.q = q;
+            for i=1:self.jointNumber
+                if self.jointType(i) == 0
+                    self.iTj(:,:,i) = self.iTj_0(:,:,i) * [cos(self.q(i)), -sin(self.q(i)), 0, 0; 
+                                                           sin(self.q(i)), cos(self.q(i)), 0, 0; 
+                                                           0, 0, 1, 0; 
+                                                           0, 0, 0, 1];
+                elseif self.jointType(i) == 1
+                    self.iTj(:,:,i) = self.iTj_0(:,:,i) * [1, 0, 0, 0; 
+                                                           0, 1, 0, 0; 
+                                                           0, 0, 1, self.q(i); 
+                                                           0, 0, 0, 1];
+                end
+            end 
+
+     
+        end
+
+        function [bTk] = getTransformWrtBase(self,k)
+            %% GetTransformatioWrtBase function
+            % Inputs: k, idx for which computing the transformation matrix
+            % outputs: bTk, transformation matrix from the manipulator base to the k-th joint in
+            % the configuration identified by iTj.
+            bTk = eye(4);
+            for i=1:k
+                bTk = bTk * self.iTj(:,:,i);
+            end
+
         end
 
         function [bTt] = getToolTransformWrtBase(self)
@@ -48,16 +77,8 @@ classdef geometricModel < handle
             % bTt : transformation matrix from the manipulator base to the
             % tool
 
-            %TO DO
-        end
-
-        function [bTk] = getTransformWrtBase(self,k)
-            %% getTransformWrtBase function
-            % Inputs :
-            % k: the idx for which computing the transformation matrix
-            % outputs
-            % bTk : transformation matrix from the manipulator base to the k-th joint in
-            % the configuration identified by iTj.
+            bTe = getTransformWrtBase(self,7);
+            bTt = bTe * self.eTt;
 
             %TO DO
         end
