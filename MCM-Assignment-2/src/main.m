@@ -130,8 +130,8 @@ o_v_ee = ni(4:6);
 bTe = geometricModel.getTransformWrtBase(length(jointType));  
 ee_R_b = bTe(1:3,1:3);
 
-omega_ee = ee_R_b*o_omega_ee;
-v_ee = ee_R_b*o_v_ee;
+omega_ee = ee_R_b'*o_omega_ee;
+v_ee = ee_R_b'*o_v_ee;
 
 disp('Angular velocity components:')
 disp(omega_ee);

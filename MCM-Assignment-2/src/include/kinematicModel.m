@@ -37,9 +37,9 @@ classdef kinematicModel < handle
             % Compute linear Jacobian
             for j=1:i
                 if self.gm.jointType(j) == 0
-                    nR0 = self.gm.getTransformWrtBase(length(self.gm.jointNumber));
+                    iR0 = self.gm.getTransformWrtBase(i);
                     k_index = self.gm.getTransformWrtBase(j);
-                    bJ_l(:, j) = cross(k_index(1:3,3), nR0(1:3,4)-k_index(1:3,4));
+                    bJ_l(:, j) = cross(k_index(1:3,3), iR0(1:3,4)-k_index(1:3,4));
                 elseif self.gm.jointType(j) == 1
                     k_index = self.gm.getTransformWrtBase(j);
                     bJ_l(:, j) = k_index(1:3,3);
