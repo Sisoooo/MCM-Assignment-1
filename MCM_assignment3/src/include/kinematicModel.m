@@ -25,6 +25,7 @@ classdef kinematicModel < handle
             % The function returns bJi
 
             % Compute angular Jacobian
+
             for j=1:i
                 if self.gm.jointType(j) == 0
                     k_index = self.gm.getTransformWrtBase(j);
@@ -37,9 +38,9 @@ classdef kinematicModel < handle
             % Compute linear Jacobian
             for j=1:i
                 if self.gm.jointType(j) == 0
-                    nR0 = self.gm.getTransformWrtBase(length(self.gm.jointNumber));
+                    nT0 = self.gm.getTransformWrtBase(self.gm.jointNumber);
                     k_index = self.gm.getTransformWrtBase(j);
-                    bJ_l(:, j) = cross(k_index(1:3,3), nR0(1:3,4)-k_index(1:3,4));
+                    bJ_l(:, j) = cross(k_index(1:3,3), nT0(1:3,4)-k_index(1:3,4));
                 elseif self.gm.jointType(j) == 1
                     k_index = self.gm.getTransformWrtBase(j);
                     bJ_l(:, j) = k_index(1:3,3);
@@ -60,10 +61,13 @@ classdef kinematicModel < handle
         % Rigid body Jacobian
 
         jac = self.getJacobianOfLinkWrtBase(self.gm.jointNumber);
-        t_r_n = [0, 0, 0.1; 0, 0, -0.3; -0.1, 0.3, 0];
+        e_r_te = self.gm.eTt(1:3,4);
+        t_r_n = [0, -e_r_te(3), e_r_te(2); 
+                 e_r_te(3), 0, -e_r_te(1); 
+                 -e_r_te(2), e_r_te(1), 0];
         nTo = self.gm.getTransformWrtBase(self.gm.jointNumber);
         nRo = nTo(1:3, 1:3);
-        mat = [eye(3), zeros(3,3); nRo * t_r_n * nRo', zeros(3,3)];
+        mat = [eye(3), zeros(3,3); -nRo * t_r_n * nRo', eye(3)];
         self.J = mat * jac;
 
         end

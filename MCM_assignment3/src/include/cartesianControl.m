@@ -28,14 +28,15 @@ classdef cartesianControl < handle
 
             bTt = self.gm.getToolTransformWrtBase();
             t_r_g = bTg(1:3,4) - bTt(1:3,4);
-            v_dot = self.k_l * t_r_g;
 
             tRg = bTg(1:3,1:3) * bTt(1:3,1:3)';
-            t_rho_g = rotm2axang(tRg);
-            omega_dot = self.k_a * t_rho_g(1:3) * t_rho_g(4);
+            angleax = rotm2axang(tRg);
+            t_rho_g = (angleax(1:3) * angleax(4))';
 
-            x_dot = [v_dot; omega_dot'];
-            
+            b_e = [t_rho_g; t_r_g];
+            lambda = [self.k_a * eye(3), zeros(3,3); zeros(3,3), self.k_l * eye(3)];
+
+            x_dot = lambda * b_e;
             
         end
     end

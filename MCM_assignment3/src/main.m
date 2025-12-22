@@ -42,7 +42,7 @@ bTt = gm.getToolTransformWrtBase();
 bOg = [0.2; -0.7; 0.3];
 theta = pi/2;
 bRg = rotation(0,theta,0);
-bTg = [bRg bOg;0 0 0 1]; 
+bTg = [bRg bOg; 0 0 0 1]; 
 % disp('bTg')
 % disp(bTg)
 
@@ -98,6 +98,7 @@ for i = t
     q = KinematicSimulation(q, q_dot, dt, qmin, qmax);
     
     pm.plotIter(gm, km, i, q_dot);
+    disp(norm(x_dot))
 
     if(norm(x_dot(1:3)) < 0.01 && norm(x_dot(4:6)) < 0.01)
         disp('Reached Requested Pose')
