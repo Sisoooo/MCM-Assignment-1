@@ -82,19 +82,9 @@ for i = t
 
     gm.updateDirectGeometry(q);
 
-    for j=1:gm.jointNumber
-        bTj = gm.getTransformWrtBase(j);
-        bTi(:, :, j) = bTj;
-        bri(:, j) = bTj(1:3, 4); 
-    end
-
-    bTt = gm.getToolTransformWrtBase();
-    bri(:, gm.jointNumber+1) = bTt(1:3,4);
-
     % Get the cartesian error given an input goal frame
     
     x_dot = cc.getCartesianReference(bTg);
-    disp(x_dot)
 
     % Update the jacobian matrix of the given model
 
@@ -103,11 +93,9 @@ for i = t
     %% INVERSE KINEMATICS
     % Compute desired joint velocities 
     q_dot = pinv(km.J) * x_dot;
-    disp(q_dot)
 
     % simulating the robot
-    q = KinematicSimulation(q, q_dot, i, qmin, qmax);
-    disp(q)
+    q = KinematicSimulation(q, q_dot, dt, qmin, qmax);
     
     pm.plotIter(gm, km, i, q_dot);
 
