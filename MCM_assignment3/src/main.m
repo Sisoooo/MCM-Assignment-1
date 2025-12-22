@@ -32,10 +32,10 @@ km = kinematicModel(gm);
 
 bTt = gm.getToolTransformWrtBase();
 
-disp("eTt");
-disp(eTt);
-disp('bTt');
-disp(bTt);
+% disp("eTt");
+% disp(eTt);
+% disp('bTt');
+% disp(bTt);
 
 %% Define the goal frame and initialize cartesian control
 % Goal definition 
@@ -43,8 +43,8 @@ bOg = [0.2; -0.7; 0.3];
 theta = pi/2;
 bRg = rotation(0,theta,0);
 bTg = [bRg bOg;0 0 0 1]; 
-disp('bTg')
-disp(bTg)
+% disp('bTg')
+% disp(bTg)
 
 % control proportional gain 
 k_a = 0.8;
@@ -88,12 +88,13 @@ for i = t
         bri(:, j) = bTj(1:3, 4); 
     end
 
-    bTe = gm.getToolTransformWrtBase();
-    bri(:, gm.jointNumber+1) = bTe(1:3,4);
+    bTt = gm.getToolTransformWrtBase();
+    bri(:, gm.jointNumber+1) = bTt(1:3,4);
 
     % Get the cartesian error given an input goal frame
     
     x_dot = cc.getCartesianReference(bTg);
+    disp(x_dot)
 
     % Update the jacobian matrix of the given model
 
@@ -102,9 +103,11 @@ for i = t
     %% INVERSE KINEMATICS
     % Compute desired joint velocities 
     q_dot = pinv(km.J) * x_dot;
+    disp(q_dot)
 
     % simulating the robot
     q = KinematicSimulation(q, q_dot, i, qmin, qmax);
+    disp(q)
     
     pm.plotIter(gm, km, i, q_dot);
 
