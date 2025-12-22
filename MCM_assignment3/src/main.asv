@@ -113,6 +113,8 @@ for i = t
         break
     end
 
+    pause(3);
+
 end
 
 pm.plotFinalConfig(gm);
