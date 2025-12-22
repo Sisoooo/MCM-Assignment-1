@@ -80,7 +80,6 @@ classdef geometricModel < handle
             bTe = getTransformWrtBase(self,7);
             bTt = bTe * self.eTt;
 
-            %TO DO
         end
 
     end

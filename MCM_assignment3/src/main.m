@@ -25,7 +25,7 @@ eTt = [eRt, e_r_te; 0, 0, 0, 1];
 gm = geometricModel(iTj_0,jointType,eTt);
 
 % Update direct geoemtry given q0
-gm.updateDirectGeometry(q1);
+gm.updateDirectGeometry(q);
 
 % Initialize the kinematic model given the goemetric model
 km = kinematicModel(gm);
@@ -47,11 +47,11 @@ disp('bTg')
 disp(bTg)
 
 % control proportional gain 
-k_a = ...
-k_l = ...
+k_a = 0.8;
+k_l = 0.8;
 
 % Cartesian control initialization
-cc = cartesianControl(....);
+cc = cartesianControl(gm, k_a, k_l);
 
 %% Initialize control loop 
 
@@ -80,13 +80,28 @@ pm.initMotionPlot(t, bTg(1:3,4));
 for i = t
     % Updating transformation matrices for the new configuration 
 
+    gm.updateDirectGeometry(q);
+
+    for j=1:gm.jointNumber
+        bTj = gm.getTransformWrtBase(j);
+        bTi(:, :, j) = bTj;
+        bri(:, j) = bTj(1:3, 4); 
+    end
+
+    bTe = gm.getToolTransformWrtBase();
+    bri(:, gm.jointNumber+1) = bTe(1:3,4);
+
     % Get the cartesian error given an input goal frame
+    
+    x_dot = cc.getCartesianReference(bTg);
 
     % Update the jacobian matrix of the given model
 
+    km.updateJacobian();
+
     %% INVERSE KINEMATICS
     % Compute desired joint velocities 
-    q_dot = ...
+    q_dot = pinv(km.J) * x_dot;
 
     % simulating the robot
     q = KinematicSimulation(....);

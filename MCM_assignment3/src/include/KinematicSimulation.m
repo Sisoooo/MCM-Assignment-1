@@ -9,5 +9,6 @@
 %
 % Outputs
 % - q new joint configuration
+function KinematicSimulation()
 
 end
