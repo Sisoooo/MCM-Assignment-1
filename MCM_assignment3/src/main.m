@@ -32,10 +32,10 @@ km = kinematicModel(gm);
 
 bTt = gm.getToolTransformWrtBase();
 
-% disp("eTt");
-% disp(eTt);
-% disp('bTt');
-% disp(bTt);
+disp("eTt");
+disp(eTt);
+disp('bTt');
+disp(bTt);
 
 %% Define the goal frame and initialize cartesian control
 % Goal definition 
@@ -43,8 +43,8 @@ bOg = [0.2; -0.7; 0.3];
 theta = pi/2;
 bRg = rotation(0,theta,0);
 bTg = [bRg bOg; 0 0 0 1]; 
-% disp('bTg')
-% disp(bTg)
+disp('bTg')
+disp(bTg)
 
 % control proportional gain 
 k_a = 0.8;
@@ -58,7 +58,7 @@ cc = cartesianControl(gm, k_a, k_l);
 % Simulation variables
 samples = 100;
 t_start = 0.0;
-t_end = 10.0;
+t_end = 20.0;
 dt = (t_end-t_start)/samples;
 t = t_start:dt:t_end; 
 
@@ -98,7 +98,7 @@ for i = t
     q = KinematicSimulation(q, q_dot, dt, qmin, qmax);
     
     pm.plotIter(gm, km, i, q_dot);
-    disp(norm(x_dot))
+    disp(x_dot)
 
     if(norm(x_dot(1:3)) < 0.01 && norm(x_dot(4:6)) < 0.01)
         disp('Reached Requested Pose')

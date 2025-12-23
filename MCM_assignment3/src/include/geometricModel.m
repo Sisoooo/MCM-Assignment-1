@@ -77,7 +77,7 @@ classdef geometricModel < handle
             % bTt : transformation matrix from the manipulator base to the
             % tool
 
-            bTe = getTransformWrtBase(self,7);
+            bTe = getTransformWrtBase(self, self.jointNumber);
             bTt = bTe * self.eTt;
 
         end

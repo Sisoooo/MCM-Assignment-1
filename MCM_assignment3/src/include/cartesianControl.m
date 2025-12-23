@@ -28,7 +28,7 @@ classdef cartesianControl < handle
 
             bTt = self.gm.getToolTransformWrtBase();
             t_r_g = bTg(1:3,4) - bTt(1:3,4);
-
+        
             tRg = bTg(1:3,1:3) * bTt(1:3,1:3)';
             angleax = rotm2axang(tRg);
             t_rho_g = (angleax(1:3) * angleax(4))';

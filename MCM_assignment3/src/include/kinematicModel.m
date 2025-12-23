@@ -61,13 +61,13 @@ classdef kinematicModel < handle
         % Rigid body Jacobian
 
         jac = self.getJacobianOfLinkWrtBase(self.gm.jointNumber);
-        e_r_te = self.gm.eTt(1:3,4);
+        nTo = self.gm.getTransformWrtBase(self.gm.jointNumber);
+        nRo = nTo(1:3, 1:3);
+        e_r_te = nRo * self.gm.eTt(1:3,4);
         t_r_n = [0, -e_r_te(3), e_r_te(2); 
                  e_r_te(3), 0, -e_r_te(1); 
                  -e_r_te(2), e_r_te(1), 0];
-        nTo = self.gm.getTransformWrtBase(self.gm.jointNumber);
-        nRo = nTo(1:3, 1:3);
-        mat = [eye(3), zeros(3,3); -nRo * t_r_n * nRo', eye(3)];
+        mat = [eye(3), zeros(3,3); t_r_n', eye(3)];
         self.J = mat * jac;
 
         end
