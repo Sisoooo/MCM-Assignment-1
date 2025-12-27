@@ -19,7 +19,7 @@ classdef cartesianControl < handle
                 error('Not enough input arguments (cartesianControl)')
             end
         end
-        function [x_dot]=getCartesianReference(self,bTg)
+        function [b_e, x_dot]=getCartesianReference(self,bTg)
             %% getCartesianReference function
             % Inputs :
             % bTg : goal frame
@@ -30,12 +30,12 @@ classdef cartesianControl < handle
             t_r_g = bTg(1:3,4) - bTt(1:3,4);
         
             tRg = bTg(1:3,1:3) * bTt(1:3,1:3)';
-            angleax = rotm2axang(tRg);
-            t_rho_g = (angleax(1:3) * angleax(4))';
+            [h, theta] = RotAngleAxis(tRg);
+            t_rho_g = (h * theta);
 
             b_e = [t_rho_g; t_r_g];
+        
             lambda = [self.k_a * eye(3), zeros(3,3); zeros(3,3), self.k_l * eye(3)];
-
             x_dot = lambda * b_e;
             
         end

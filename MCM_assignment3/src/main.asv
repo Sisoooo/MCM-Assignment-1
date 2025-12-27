@@ -135,10 +135,10 @@ disp("Inital and final joint velocities")
 disp([qdot_v(1,:)', qdot_v(index - 1, :)'])
 
 disp("Inital and final end effector velocities")
-disp([ee_vels(1,:)', ee_vels(index - 1, :)'])
+disp([ee_vels(1,:)', ee_vels(index, :)'])
 
 disp("Inital and final tool velocities")
-disp([t_vels(1,:)', t_vels(index - 1, :)'])
+disp([t_vels(1,:)', t_vels(index, :)'])
 
 
 
