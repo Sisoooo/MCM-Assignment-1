@@ -7,8 +7,8 @@ addpath('include'); % put relevant functions inside the /include folder
 %% Compute the geometric model for the given manipulator
 iTj_0 = BuildTree();
 
-% disp('iTj_0')
-% disp(iTj_0);
+disp('iTj_0')
+disp(iTj_0);
 jointType = [0 0 0 0 0 1 0]; % specify two possible link type: Rotational, Prismatic.
 q = [pi/2, -pi/4, 0, -pi/4, 0, 0.15, pi/4]';
 
@@ -32,10 +32,10 @@ km = kinematicModel(gm);
 
 bTt = gm.getToolTransformWrtBase();
 
-% disp("eTt");
-% disp(eTt);
-% disp('bTt');
-% disp(bTt);
+disp("eTt");
+disp(eTt);
+disp('bTt');
+disp(bTt);
 
 %% Define the goal frame and initialize cartesian control
 % Goal definition 
@@ -128,10 +128,10 @@ pm.plotFinalConfig(gm);
 disp("Inital and final cartesian error")
 disp([errors(1,:)', errors(index, :)'])
 
-disp("Inital and final cartesian velocities")
+disp("Inital and final reference cartesian velocities of the tool (x_dot)")
 disp([xdot_v(1,:)', xdot_v(index - 1, :)'])
 
-disp("Inital and final joint velocities")
+disp("Inital and final joint velocities (q_dot)")
 disp([qdot_v(1,:)', qdot_v(index - 1, :)'])
 
 disp("Inital and final end effector velocities")
