@@ -101,6 +101,10 @@ for i = t
 
     %% INVERSE KINEMATICS
     % Compute desired joint velocities 
+    s = svd(km.J); 
+    if min(s) < 1e-3 
+        warning('Near singularity!');
+    end
     q_dot = pinv(km.J) * x_dot;
 
     % simulating the robot
